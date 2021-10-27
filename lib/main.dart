@@ -17,11 +17,29 @@ class BytebankApp extends StatelessWidget {
   }
 }
 
-// ignore: use_key_in_widget_constructors
-class NewTransferForm extends StatelessWidget {
+class NewTransferForm extends StatefulWidget {
+  const NewTransferForm({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return NewTransferFormState();
+  }
+}
+
+class NewTransferFormState extends State<NewTransferForm> {
   final TextEditingController _controllerFieldAccountNumber =
       TextEditingController();
   final TextEditingController _controllerFieldValue = TextEditingController();
+
+  void _createTransfer(
+      context, _controllerFieldAccountNumber, _controllerFieldValue) {
+    final int? accountNumber = int.tryParse(_controllerFieldAccountNumber.text);
+    final double? value = double.tryParse(_controllerFieldValue.text);
+    final createdTransfer = Transfer(value!, accountNumber!);
+    debugPrint('Creating new transfer');
+    debugPrint('$createdTransfer');
+    Navigator.pop(context, createdTransfer);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +47,8 @@ class NewTransferForm extends StatelessWidget {
         appBar: AppBar(
           title: const Text('New Transfer'),
         ),
-        body: Column(
+        body: SingleChildScrollView(
+            child: Column(
           children: [
             Editor(
                 controller: _controllerFieldAccountNumber,
@@ -49,18 +68,8 @@ class NewTransferForm extends StatelessWidget {
               child: const Text('Send'),
             )
           ],
-        ));
+        )));
   }
-}
-
-void _createTransfer(
-    context, _controllerFieldAccountNumber, _controllerFieldValue) {
-  final int? accountNumber = int.tryParse(_controllerFieldAccountNumber.text);
-  final double? value = double.tryParse(_controllerFieldValue.text);
-  final createdTransfer = Transfer(value!, accountNumber!);
-  debugPrint('Creating new transfer');
-  debugPrint('$createdTransfer');
-  Navigator.pop(context, createdTransfer);
 }
 
 class Editor extends StatelessWidget {
@@ -124,21 +133,31 @@ class TransferListState extends State<TransfersList> {
           return TransferItem(transfer);
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           final Future future =
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return NewTransferForm();
+            return const NewTransferForm();
           }));
           future.then((receivedTransfer) {
-            debugPrint('New transfer received');
-            debugPrint('$receivedTransfer');
-            setState(() {
-              widget._transfers.add(receivedTransfer);
+            Future.delayed(const Duration(seconds: 1), () {
+              debugPrint('New transfer received');
+              debugPrint('$receivedTransfer');
+              if (receivedTransfer != null) {
+                setState(() {
+                  widget._transfers.add(receivedTransfer);
+                });
+              }
             });
           });
         },
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
+        label: const Text('Add'),
+        tooltip: 'Click to Add',
+        elevation: 6,
+        hoverElevation: 20,
+        splashColor: Colors.blueGrey,
+        highlightElevation: 20,
       ),
     );
   }

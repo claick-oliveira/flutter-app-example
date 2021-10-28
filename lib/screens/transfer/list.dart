@@ -2,6 +2,10 @@ import 'package:bytebank/models/transfer.dart';
 import 'package:bytebank/screens/transfer/form.dart';
 import 'package:flutter/material.dart';
 
+const _title = 'Transfers';
+const _label = 'Add';
+const _buttonTip = 'Click to Add';
+
 class TransfersList extends StatefulWidget {
   TransfersList({Key? key}) : super(key: key);
 
@@ -16,7 +20,7 @@ class TransferListState extends State<TransfersList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Transfers'),
+        title: const Text(_title),
       ),
       body: ListView.builder(
         itemCount: widget._transfers.length,
@@ -27,31 +31,27 @@ class TransferListState extends State<TransfersList> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          final Future future =
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const NewTransferForm();
-          }));
-          future.then((receivedTransfer) {
-            Future.delayed(const Duration(seconds: 1), () {
-              debugPrint('New transfer received');
-              debugPrint('$receivedTransfer');
-              if (receivedTransfer != null) {
-                setState(() {
-                  widget._transfers.add(receivedTransfer);
-                });
-              }
-            });
-          });
+          final Future future = Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const NewTransferForm()),
+          );
+          future.then((receivedTransfer) => _update(receivedTransfer));
         },
         icon: const Icon(Icons.add),
-        label: const Text('Add'),
-        tooltip: 'Click to Add',
+        label: const Text(_label),
+        tooltip: _buttonTip,
         elevation: 6,
         hoverElevation: 20,
         splashColor: Colors.blueGrey,
         highlightElevation: 20,
       ),
     );
+  }
+
+  void _update(receivedTransfer) {
+    if (receivedTransfer != null) {
+      setState(() => widget._transfers.add(receivedTransfer));
+    }
   }
 }
 
@@ -63,13 +63,14 @@ class TransferItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        child: ListTile(
-      leading: const Icon(
-        Icons.monetization_on,
-        size: 62.0,
+      child: ListTile(
+        leading: const Icon(
+          Icons.monetization_on,
+          size: 62.0,
+        ),
+        title: Text(_transfer.value.toString()),
+        subtitle: Text(_transfer.accountNumber.toString()),
       ),
-      title: Text(_transfer.value.toString()),
-      subtitle: Text(_transfer.accountNumber.toString()),
-    ));
+    );
   }
 }

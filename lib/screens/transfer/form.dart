@@ -2,6 +2,13 @@ import 'package:bytebank/components/editor.dart';
 import 'package:bytebank/models/transfer.dart';
 import 'package:flutter/material.dart';
 
+const _title = 'New Transfer';
+const _accountNumber = 'Account Number';
+const _accountHint = '0000';
+const _value = 'Value';
+const _valueHint = '0.00';
+const _sendButton = 'Send';
+
 class NewTransferForm extends StatefulWidget {
   const NewTransferForm({Key? key}) : super(key: key);
 
@@ -22,8 +29,6 @@ class NewTransferFormState extends State<NewTransferForm> {
     final double? value = double.tryParse(_controllerFieldValue.text);
     if (value != null && accountNumber != null) {
       final createdTransfer = Transfer(value, accountNumber);
-      debugPrint('Creating new transfer');
-      debugPrint('$createdTransfer');
       Navigator.pop(context, createdTransfer);
     }
   }
@@ -31,30 +36,35 @@ class NewTransferFormState extends State<NewTransferForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('New Transfer'),
-        ),
-        body: SingleChildScrollView(
-            child: Column(
+      appBar: AppBar(
+        title: const Text(_title),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Editor(
                 controller: _controllerFieldAccountNumber,
-                textLabel: 'Account Number',
-                textHint: '0000',
+                textLabel: _accountNumber,
+                textHint: _accountHint,
                 keyboardType: TextInputType.number),
             Editor(
                 controller: _controllerFieldValue,
-                textLabel: 'Value',
-                textHint: '0.00',
+                textLabel: _value,
+                textHint: _valueHint,
                 icon: Icons.monetization_on,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true)),
             ElevatedButton(
-              onPressed: () => _createTransfer(context,
-                  _controllerFieldAccountNumber, _controllerFieldValue),
-              child: const Text('Send'),
+              onPressed: () => _createTransfer(
+                context,
+                _controllerFieldAccountNumber,
+                _controllerFieldValue,
+              ),
+              child: const Text(_sendButton),
             )
           ],
-        )));
+        ),
+      ),
+    );
   }
 }

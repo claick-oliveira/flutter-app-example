@@ -5,7 +5,5 @@ class Transfer {
   Transfer(this.value, this.accountNumber);
 
   @override
-  String toString() {
-    return 'Transfer{value: $value, accountNumber: $accountNumber}';
-  }
+  String toString() => 'Transfer{value: $value, accountNumber: $accountNumber}';
 }

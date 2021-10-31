@@ -2,7 +2,6 @@ import 'package:bytebank/components/editor.dart';
 import 'package:bytebank/models/transfer.dart';
 import 'package:flutter/material.dart';
 
-const _title = 'New Transfer';
 const _accountNumber = 'Account Number';
 const _accountHint = '0000';
 const _value = 'Value';
@@ -36,33 +35,34 @@ class NewTransferFormState extends State<NewTransferForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(_title),
-      ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Editor(
-                controller: _controllerFieldAccountNumber,
-                textLabel: _accountNumber,
-                textHint: _accountHint,
-                keyboardType: TextInputType.number),
-            Editor(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            children: [
+              Editor(
+                  controller: _controllerFieldAccountNumber,
+                  textLabel: _accountNumber,
+                  textHint: _accountHint,
+                  keyboardType: TextInputType.number),
+              Editor(
                 controller: _controllerFieldValue,
                 textLabel: _value,
                 textHint: _valueHint,
                 icon: Icons.monetization_on,
                 keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true)),
-            ElevatedButton(
-              onPressed: () => _createTransfer(
-                context,
-                _controllerFieldAccountNumber,
-                _controllerFieldValue,
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-              child: const Text(_sendButton),
-            )
-          ],
+              ElevatedButton(
+                onPressed: () => _createTransfer(
+                  context,
+                  _controllerFieldAccountNumber,
+                  _controllerFieldValue,
+                ),
+                child: const Text(_sendButton),
+              )
+            ],
+          ),
         ),
       ),
     );

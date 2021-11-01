@@ -5,10 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 class TransferItem extends StatelessWidget {
   final String text;
   final String time;
+  final String value;
   const TransferItem({
     Key? key,
     required this.text,
     required this.time,
+    required this.value,
   }) : super(key: key);
 
   @override
@@ -38,7 +40,7 @@ class TransferItem extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Text(
-          '-20 MLR',
+          value,
           style: GoogleFonts.mulish(
               fontSize: 12,
               fontWeight: FontWeight.bold,

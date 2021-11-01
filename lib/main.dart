@@ -14,7 +14,7 @@ class BytebankApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Home(),
-        '/transfer': (context) => const NewTransferForm(),
+        '/transfer': (context) => NewTransferForm(),
       },
       debugShowCheckedModeBanner: false,
     );

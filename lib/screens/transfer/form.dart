@@ -8,16 +8,8 @@ const _value = 'Value';
 const _valueHint = '0.00';
 const _sendButton = 'Send';
 
-class NewTransferForm extends StatefulWidget {
-  const NewTransferForm({Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() {
-    return NewTransferFormState();
-  }
-}
-
-class NewTransferFormState extends State<NewTransferForm> {
+class NewTransferForm extends StatelessWidget {
+  NewTransferForm({Key? key}) : super(key: key);
   final TextEditingController _controllerFieldAccountNumber =
       TextEditingController();
   final TextEditingController _controllerFieldValue = TextEditingController();
@@ -27,7 +19,8 @@ class NewTransferFormState extends State<NewTransferForm> {
     final int? accountNumber = int.tryParse(_controllerFieldAccountNumber.text);
     final double? value = double.tryParse(_controllerFieldValue.text);
     if (value != null && accountNumber != null) {
-      final createdTransfer = Transfer(value, accountNumber);
+      DateTime now = DateTime.now();
+      final createdTransfer = Transfer(value, accountNumber, now);
       Navigator.pop(context, createdTransfer);
     }
   }

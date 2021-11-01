@@ -4,12 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 class OperationButton extends StatelessWidget {
   final IconData icon;
   final String text;
-  final String desiredRoute;
+  final Function onMyTap;
   const OperationButton({
     Key? key,
     required this.text,
     required this.icon,
-    required this.desiredRoute,
+    required this.onMyTap,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class OperationButton extends StatelessWidget {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, desiredRoute);
+            onMyTap();
           },
           child: Container(
             height: 80,

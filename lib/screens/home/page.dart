@@ -2,13 +2,11 @@ import 'package:bytebank/components/balance.dart';
 import 'package:bytebank/components/operation_button.dart';
 import 'package:bytebank/components/title_text.dart';
 import 'package:bytebank/components/user.dart';
-import 'package:bytebank/models/transfer.dart';
 import 'package:bytebank/screens/transfer/list.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Home extends StatefulWidget {
-  final List<Transfer> _transfers = [];
+  final List _transfers = [];
   Home({Key? key}) : super(key: key);
 
   @override
@@ -16,20 +14,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  _update(receivedTransfer) {
-    if (receivedTransfer != null) {
-      setState(() => widget._transfers.add(receivedTransfer));
+  void _nextRoute(context, desiredRoute) async {
+    final result = await Navigator.pushNamed(context, desiredRoute);
+    // ignore: avoid_print
+    if (result != null) {
+      widget._transfers.add(result);
     }
+    setState(() {});
   }
-
-  // _moveToTransactionPage() async {
-  //   var receivedTransfer = const OperationButton(
-  //     icon: Icons.transfer_within_a_station,
-  //     text: 'Transfer',
-  //     desiredRoute: '/transfer',
-  //   );
-  //   _update(receivedTransfer);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -53,60 +45,33 @@ class _HomeState extends State<Home> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  // TODO: Change this Logic
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          {
-                            final Future future =
-                                Navigator.pushNamed(context, '/transfer');
-                            future.then(
-                              (receivedTransfer) => _update(receivedTransfer),
-                            );
-                          }
-                        },
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Color(0xfff3f3f3),
-                                    offset: Offset(5, 5),
-                                    blurRadius: 10)
-                              ]),
-                          child: const Icon(Icons.transfer_within_a_station),
-                        ),
-                      ),
-                      Text('Transfer',
-                          style: GoogleFonts.mulish(
-                              textStyle: Theme.of(context).textTheme.headline4,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: const Color(0xff76797e))),
-                    ],
+                  OperationButton(
+                    icon: Icons.transfer_within_a_station,
+                    text: 'Transfer',
+                    onMyTap: () {
+                      _nextRoute(context, '/transfer');
+                    },
                   ),
-                  const OperationButton(
+                  OperationButton(
                     icon: Icons.perm_contact_cal,
                     text: 'Contacts',
-                    desiredRoute: '/',
+                    onMyTap: () {
+                      _nextRoute(context, '/');
+                    },
                   ),
-                  const OperationButton(
+                  OperationButton(
                     icon: Icons.compare_arrows,
                     text: 'Transactions',
-                    desiredRoute: '/',
+                    onMyTap: () {
+                      _nextRoute(context, '/');
+                    },
                   ),
                 ],
               ),
               const SizedBox(height: 40),
               const TitleText(text: "Transactions"),
               const SizedBox(height: 20),
-              Transfers(
+              TransferList(
                 transfers: widget._transfers,
               )
             ],

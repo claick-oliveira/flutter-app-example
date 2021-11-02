@@ -1,3 +1,5 @@
+import 'package:bytebank/screens/contacts/form.dart';
+import 'package:bytebank/screens/contacts/page.dart';
 import 'package:bytebank/screens/home/page.dart';
 import 'package:bytebank/screens/transfer/form.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,8 @@ class BytebankApp extends StatelessWidget {
       routes: {
         '/': (context) => Home(),
         '/transfer': (context) => NewTransferForm(),
+        '/contacts': (context) => ContactList(),
+        '/newContact': (context) => NewContactForm(),
       },
       debugShowCheckedModeBanner: false,
     );

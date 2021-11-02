@@ -42,9 +42,9 @@ class TransferItem extends StatelessWidget {
         child: Text(
           value,
           style: GoogleFonts.mulish(
-              fontSize: 12,
+              fontSize: 15,
               fontWeight: FontWeight.bold,
-              color: Colors.blue.shade200),
+              color: Colors.green.shade300),
         ),
       ),
     );

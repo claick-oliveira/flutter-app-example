@@ -25,23 +25,28 @@ class OperationButton extends StatelessWidget {
             width: 80,
             margin: const EdgeInsets.symmetric(vertical: 10),
             decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Color(0xfff3f3f3),
-                      offset: Offset(5, 5),
-                      blurRadius: 10)
-                ]),
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Color(0xfff3f3f3),
+                  offset: Offset(5, 5),
+                  blurRadius: 10,
+                )
+              ],
+            ),
             child: Icon(icon),
           ),
         ),
-        Text(text,
-            style: GoogleFonts.mulish(
-                textStyle: Theme.of(context).textTheme.headline4,
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                color: const Color(0xff76797e))),
+        Text(
+          text,
+          style: GoogleFonts.mulish(
+            textStyle: Theme.of(context).textTheme.headline4,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xff76797e),
+          ),
+        ),
       ],
     );
   }

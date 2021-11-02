@@ -14,13 +14,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void _nextRoute(context, desiredRoute) async {
+  void _transferRoute(context, desiredRoute) async {
     final result = await Navigator.pushNamed(context, desiredRoute);
     // ignore: avoid_print
     if (result != null) {
       widget._transfers.add(result);
     }
     setState(() {});
+  }
+
+  void _nextRoute(context, desiredRoute) {
+    Navigator.pushNamed(context, desiredRoute);
   }
 
   @override
@@ -49,14 +53,14 @@ class _HomeState extends State<Home> {
                     icon: Icons.transfer_within_a_station,
                     text: 'Transfer',
                     onMyTap: () {
-                      _nextRoute(context, '/transfer');
+                      _transferRoute(context, '/transfer');
                     },
                   ),
                   OperationButton(
                     icon: Icons.perm_contact_cal,
                     text: 'Contacts',
                     onMyTap: () {
-                      _nextRoute(context, '/');
+                      _nextRoute(context, '/contacts');
                     },
                   ),
                   OperationButton(

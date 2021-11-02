@@ -1,9 +1,10 @@
 class Transfer {
+  final int id;
   final double value;
   final int accountNumber;
   final DateTime time;
 
-  Transfer(this.value, this.accountNumber, this.time);
+  Transfer(this.id, this.value, this.accountNumber, this.time);
 
   @override
   String toString() =>

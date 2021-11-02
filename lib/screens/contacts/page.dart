@@ -1,10 +1,11 @@
 import 'package:bytebank/components/contact.dart';
 import 'package:bytebank/components/title_text.dart';
+import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
 class ContactList extends StatefulWidget {
-  final List _contacts = [];
-  ContactList({Key? key}) : super(key: key);
+  const ContactList({Key? key}) : super(key: key);
 
   @override
   State<ContactList> createState() => _ContactListState();
@@ -13,15 +14,13 @@ class ContactList extends StatefulWidget {
 class _ContactListState extends State<ContactList> {
   void _formRoute(context, desiredRoute) async {
     final result = await Navigator.pushNamed(context, desiredRoute);
-    // ignore: avoid_print
     if (result != null) {
-      widget._contacts.add(result);
+      const snackBar = SnackBar(
+        content: Text('Contact Added!'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      setState(() {});
     }
-    setState(() {});
-    const snackBar = SnackBar(
-      content: Text('Contact Added!'),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -43,18 +42,56 @@ class _ContactListState extends State<ContactList> {
               children: [
                 const TitleText(text: "Contacts"),
                 const SizedBox(height: 30),
-                ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: widget._contacts.length,
-                  itemBuilder: (context, index) {
-                    final contact = widget._contacts[index];
-                    return ContactCard(
-                      name: contact.getName(),
-                      accountNumber: contact.getAccountNumber(),
-                    );
+                FutureBuilder<List<Contact>>(
+                  initialData: const [],
+                  // Delay example to test CircularProgressIndicator()
+                  //future: Future.delayed(const Duration(seconds: 2)).then(
+                  //  (value) => findAllContacts(),
+                  //)
+                  future: findAllContacts(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<List> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                        break;
+                      case ConnectionState.waiting:
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.70,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                CircularProgressIndicator(),
+                                SizedBox(height: 10),
+                                TitleText(
+                                  text: 'Loading',
+                                  fontSize: 15,
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      case ConnectionState.active:
+                        break;
+                      case ConnectionState.done:
+                        final contacts = snapshot.data;
+                        return ListView.separated(
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: contacts?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            final contact = contacts?[index];
+                            return ContactCard(
+                              name: contact.getName(),
+                              accountNumber: contact.getAccountNumber(),
+                            );
+                          },
+                        );
+                    }
+                    return const Text('Unknow error');
                   },
                 ),
               ],

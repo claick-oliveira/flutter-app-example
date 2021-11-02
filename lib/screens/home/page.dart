@@ -16,7 +16,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   void _transferRoute(context, desiredRoute) async {
     final result = await Navigator.pushNamed(context, desiredRoute);
-    // ignore: avoid_print
     if (result != null) {
       widget._transfers.add(result);
     }

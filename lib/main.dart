@@ -17,7 +17,7 @@ class BytebankApp extends StatelessWidget {
       routes: {
         '/': (context) => Home(),
         '/transfer': (context) => NewTransferForm(),
-        '/contacts': (context) => ContactList(),
+        '/contacts': (context) => const ContactList(),
         '/newContact': (context) => NewContactForm(),
       },
       debugShowCheckedModeBanner: false,

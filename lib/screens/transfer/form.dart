@@ -20,7 +20,7 @@ class NewTransferForm extends StatelessWidget {
     final double? value = double.tryParse(_controllerFieldValue.text);
     if (value != null && accountNumber != null) {
       DateTime now = DateTime.now();
-      final createdTransfer = Transfer(value, accountNumber, now);
+      final createdTransfer = Transfer(0, value, accountNumber, now);
       Navigator.pop(context, createdTransfer);
     }
   }

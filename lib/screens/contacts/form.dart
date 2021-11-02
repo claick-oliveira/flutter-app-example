@@ -1,4 +1,5 @@
 import 'package:bytebank/components/editor.dart';
+import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,10 @@ class NewContactForm extends StatelessWidget {
     final String? name = _controllerFieldName.text;
     final int? accountNumber = int.tryParse(_controllerFieldAccountNumber.text);
     if (name != null && accountNumber != null) {
-      final createdContact = Contact(name, accountNumber);
-      Navigator.pop(context, createdContact);
+      final createdContact = Contact(0, name, accountNumber);
+      saveContact(createdContact).then(
+        (id) => Navigator.pop(context, id),
+      );
     }
   }
 
@@ -47,7 +50,7 @@ class NewContactForm extends StatelessWidget {
                 controller: _controllerFieldAccountNumber,
                 textLabel: _accountNumber,
                 textHint: _accountNumberHint,
-                keyboardType: TextInputType.name,
+                keyboardType: TextInputType.number,
               ),
               SizedBox(
                 width: double.maxFinite,

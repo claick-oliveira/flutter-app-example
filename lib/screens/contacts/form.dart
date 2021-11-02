@@ -34,7 +34,7 @@ class NewContactForm extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Editor(
@@ -49,12 +49,15 @@ class NewContactForm extends StatelessWidget {
                 textHint: _accountNumberHint,
                 keyboardType: TextInputType.name,
               ),
-              ElevatedButton(
-                onPressed: () => _createTransfer(
-                  context,
-                  _controllerFieldName,
+              SizedBox(
+                width: double.maxFinite,
+                child: ElevatedButton(
+                  onPressed: () => _createTransfer(
+                    context,
+                    _controllerFieldName,
+                  ),
+                  child: const Text(_sendButton),
                 ),
-                child: const Text(_sendButton),
               )
             ],
           ),

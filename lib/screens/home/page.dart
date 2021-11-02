@@ -21,6 +21,10 @@ class _HomeState extends State<Home> {
       widget._transfers.add(result);
     }
     setState(() {});
+    const snackBar = SnackBar(
+      content: Text('Transfer Added!'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void _nextRoute(context, desiredRoute) {

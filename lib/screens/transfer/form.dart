@@ -37,7 +37,7 @@ class NewTransferForm extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Editor(
@@ -53,13 +53,16 @@ class NewTransferForm extends StatelessWidget {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
               ),
-              ElevatedButton(
-                onPressed: () => _createTransfer(
-                  context,
-                  _controllerFieldAccountNumber,
-                  _controllerFieldValue,
+              SizedBox(
+                width: double.maxFinite,
+                child: ElevatedButton(
+                  onPressed: () => _createTransfer(
+                    context,
+                    _controllerFieldAccountNumber,
+                    _controllerFieldValue,
+                  ),
+                  child: const Text(_sendButton),
                 ),
-                child: const Text(_sendButton),
               )
             ],
           ),

@@ -35,7 +35,10 @@ class OperationButton extends StatelessWidget {
                 )
               ],
             ),
-            child: Icon(icon),
+            child: Icon(
+              icon,
+              size: 35,
+            ),
           ),
         ),
         Text(

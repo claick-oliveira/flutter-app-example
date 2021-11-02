@@ -18,6 +18,10 @@ class _ContactListState extends State<ContactList> {
       widget._contacts.add(result);
     }
     setState(() {});
+    const snackBar = SnackBar(
+      content: Text('Contact Added!'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override

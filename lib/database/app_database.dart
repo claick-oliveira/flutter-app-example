@@ -1,5 +1,5 @@
 import 'package:bytebank/models/contact.dart';
-import 'package:bytebank/models/transfer.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -24,12 +24,12 @@ Future<Database> createDatabase() {
         );
       },
       version: 1,
-      //onDowngrade: onDatabaseDowngradeDelete,
+      onDowngrade: onDatabaseDowngradeDelete,
     );
   });
 }
 
-Future<int> saveContact(Contact contact) {
+Future<int> saveContact(ContactModel contact) {
   return createDatabase().then((db) {
     final Map<String, dynamic> contactMap = {};
     contactMap['name'] = contact.name;
@@ -42,7 +42,7 @@ Future<int> saveContact(Contact contact) {
   });
 }
 
-Future<int> saveTransfer(Transfer transfer) {
+Future<int> saveTransaction(TransactionModel transfer) {
   return createDatabase().then((db) {
     final Map<String, dynamic> transferMap = {};
     transferMap['value'] = transfer.value;
@@ -56,12 +56,12 @@ Future<int> saveTransfer(Transfer transfer) {
   });
 }
 
-Future<List<Contact>> findAllContacts() {
+Future<List<ContactModel>> findAllContacts() {
   return createDatabase().then((db) {
     return db.query('contacts').then((maps) {
-      final List<Contact> contacts = [];
+      final List<ContactModel> contacts = [];
       for (Map<String, dynamic> map in maps) {
-        final Contact contact = Contact(
+        final ContactModel contact = ContactModel(
           map['id'],
           map['name'],
           map['account_number'],
@@ -69,6 +69,24 @@ Future<List<Contact>> findAllContacts() {
         contacts.add(contact);
       }
       return contacts;
+    });
+  });
+}
+
+Future<List<TransactionModel>> findAllTransactions() {
+  return createDatabase().then((db) {
+    return db.query('transactions').then((maps) {
+      final List<TransactionModel> transactions = [];
+      for (Map<String, dynamic> map in maps) {
+        final TransactionModel transaction = TransactionModel(
+          map['id'],
+          map['value'],
+          map['account_number'],
+          map['time'],
+        );
+        transactions.add(transaction);
+      }
+      return transactions;
     });
   });
 }

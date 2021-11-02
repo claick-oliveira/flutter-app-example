@@ -1,9 +1,9 @@
-class Contact {
+class ContactModel {
   final int id;
   final String name;
   final int accountNumber;
 
-  Contact(this.id, this.name, this.accountNumber);
+  ContactModel(this.id, this.name, this.accountNumber);
 
   @override
   String toString() =>

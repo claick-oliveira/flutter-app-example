@@ -18,7 +18,7 @@ class NewContactForm extends StatelessWidget {
     final String? name = _controllerFieldName.text;
     final int? accountNumber = int.tryParse(_controllerFieldAccountNumber.text);
     if (name != null && accountNumber != null) {
-      final createdContact = Contact(0, name, accountNumber);
+      final createdContact = ContactModel(0, name, accountNumber);
       saveContact(createdContact).then(
         (id) => Navigator.pop(context, id),
       );

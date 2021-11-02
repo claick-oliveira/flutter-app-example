@@ -42,7 +42,7 @@ class _ContactListState extends State<ContactList> {
               children: [
                 const TitleText(text: "Contacts"),
                 const SizedBox(height: 30),
-                FutureBuilder<List<Contact>>(
+                FutureBuilder<List<ContactModel>>(
                   initialData: const [],
                   // Delay example to test CircularProgressIndicator()
                   //future: Future.delayed(const Duration(seconds: 2)).then(

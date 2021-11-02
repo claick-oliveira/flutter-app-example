@@ -1,10 +1,10 @@
-import 'package:bytebank/models/transfer.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:flutter/material.dart';
 
-class TransferItem extends StatelessWidget {
-  final Transfer _transfer;
+class TransactionItem extends StatelessWidget {
+  final TransactionModel _transaction;
 
-  const TransferItem(this._transfer, {Key? key}) : super(key: key);
+  const TransactionItem(this._transaction, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +14,8 @@ class TransferItem extends StatelessWidget {
           Icons.monetization_on,
           size: 62.0,
         ),
-        title: Text(_transfer.value.toString()),
-        subtitle: Text(_transfer.accountNumber.toString()),
+        title: Text(_transaction.value.toString()),
+        subtitle: Text(_transaction.accountNumber.toString()),
       ),
     );
   }

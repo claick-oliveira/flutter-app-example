@@ -1,5 +1,6 @@
 import 'package:bytebank/components/editor.dart';
-import 'package:bytebank/models/transfer.dart';
+import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 const _accountNumber = 'Account Number';
@@ -8,8 +9,8 @@ const _value = 'Value';
 const _valueHint = '0.00';
 const _sendButton = 'Send';
 
-class NewTransferForm extends StatelessWidget {
-  NewTransferForm({Key? key}) : super(key: key);
+class NewTransactionForm extends StatelessWidget {
+  NewTransactionForm({Key? key}) : super(key: key);
   final TextEditingController _controllerFieldAccountNumber =
       TextEditingController();
   final TextEditingController _controllerFieldValue = TextEditingController();
@@ -20,8 +21,11 @@ class NewTransferForm extends StatelessWidget {
     final double? value = double.tryParse(_controllerFieldValue.text);
     if (value != null && accountNumber != null) {
       DateTime now = DateTime.now();
-      final createdTransfer = Transfer(0, value, accountNumber, now);
-      Navigator.pop(context, createdTransfer);
+      final createdTransaction =
+          TransactionModel(0, value, accountNumber, now.toString());
+      saveTransaction(createdTransaction).then(
+        (id) => Navigator.pop(context, id),
+      );
     }
   }
 

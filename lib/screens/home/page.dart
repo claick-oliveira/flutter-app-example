@@ -3,7 +3,7 @@ import 'package:bytebank/components/operation_button.dart';
 import 'package:bytebank/components/title_text.dart';
 import 'package:bytebank/components/transaction_item.dart';
 import 'package:bytebank/components/user.dart';
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/transaction_dao.dart';
 import 'package:bytebank/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +16,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final TransactionDAO _dao = TransactionDAO();
+
   void _transferRoute(context, desiredRoute) async {
     final result = await Navigator.pushNamed(context, desiredRoute);
     if (result != null) {
@@ -34,7 +36,7 @@ class _HomeState extends State<Home> {
   _transferList() {
     return FutureBuilder<List<TransactionModel>>(
       initialData: const [],
-      future: findAllTransactions(),
+      future: _dao.findAllTransactions(),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:

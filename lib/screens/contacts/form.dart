@@ -1,5 +1,5 @@
 import 'package:bytebank/components/editor.dart';
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -13,15 +13,16 @@ class NewContactForm extends StatelessWidget {
   final TextEditingController _controllerFieldName = TextEditingController();
   final TextEditingController _controllerFieldAccountNumber =
       TextEditingController();
+  final ContactDAO _dao = ContactDAO();
 
   void _createTransfer(context, _controllerFieldName) {
     final String? name = _controllerFieldName.text;
     final int? accountNumber = int.tryParse(_controllerFieldAccountNumber.text);
     if (name != null && accountNumber != null) {
       final createdContact = ContactModel(0, name, accountNumber);
-      saveContact(createdContact).then(
-        (id) => Navigator.pop(context, id),
-      );
+      _dao.saveContact(createdContact).then(
+            (id) => Navigator.pop(context, id),
+          );
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:bytebank/components/contact.dart';
 import 'package:bytebank/components/title_text.dart';
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +12,8 @@ class ContactList extends StatefulWidget {
 }
 
 class _ContactListState extends State<ContactList> {
+  final ContactDAO _dao = ContactDAO();
+
   void _formRoute(context, desiredRoute) async {
     final result = await Navigator.pushNamed(context, desiredRoute);
     if (result != null) {
@@ -48,7 +50,7 @@ class _ContactListState extends State<ContactList> {
                   //future: Future.delayed(const Duration(seconds: 2)).then(
                   //  (value) => findAllContacts(),
                   //)
-                  future: findAllContacts(),
+                  future: _dao.findAllContacts(),
                   builder:
                       (BuildContext context, AsyncSnapshot<List> snapshot) {
                     switch (snapshot.connectionState) {

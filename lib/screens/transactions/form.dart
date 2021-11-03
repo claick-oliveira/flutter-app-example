@@ -1,5 +1,5 @@
 import 'package:bytebank/components/editor.dart';
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/transaction_dao.dart';
 import 'package:bytebank/models/transaction.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +14,7 @@ class NewTransactionForm extends StatelessWidget {
   final TextEditingController _controllerFieldAccountNumber =
       TextEditingController();
   final TextEditingController _controllerFieldValue = TextEditingController();
+  final TransactionDAO _dao = TransactionDAO();
 
   void _createTransfer(
       context, _controllerFieldAccountNumber, _controllerFieldValue) {
@@ -23,9 +24,9 @@ class NewTransactionForm extends StatelessWidget {
       DateTime now = DateTime.now();
       final createdTransaction =
           TransactionModel(0, value, accountNumber, now.toString());
-      saveTransaction(createdTransaction).then(
-        (id) => Navigator.pop(context, id),
-      );
+      _dao.saveTransaction(createdTransaction).then(
+            (id) => Navigator.pop(context, id),
+          );
     }
   }
 

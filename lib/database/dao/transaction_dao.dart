@@ -4,7 +4,7 @@ import 'package:bytebank/database/app_database.dart';
 
 class TransactionDAO {
   static const String tableSQl = 'CREATE TABLE $_tableName('
-      '$_id INTEGER PRIMARY KEY AUTOINCREMENT, '
+      '$_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '
       '$_value REAL, '
       '$_accountNumber INTEGER, '
       '$_time TEXT)';

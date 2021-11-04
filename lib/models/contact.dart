@@ -1,7 +1,7 @@
 class ContactModel {
-  static const String _id = 'id';
   static const String _name = 'name';
   static const String _accountNumber = 'account_number';
+
   final int id;
   final String name;
   final int accountNumber;
@@ -18,7 +18,6 @@ class ContactModel {
 
   Map<String, dynamic> toMap() {
     return {
-      _id: id,
       _name: name,
       _accountNumber: accountNumber,
     };

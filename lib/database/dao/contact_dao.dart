@@ -4,7 +4,7 @@ import 'package:bytebank/database/app_database.dart';
 
 class ContactDAO {
   static const String tableSQl = 'CREATE TABLE $_tableName('
-      '$_id INTEGER PRIMARY KEY AUTOINCREMENT, '
+      '$_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '
       '$_name TEXT, '
       '$_accountNumber INTEGER)';
   static const String _tableName = 'contacts';
@@ -23,11 +23,6 @@ class ContactDAO {
 
   Future<List<ContactModel>> findAllContacts() async {
     final Database db = await getDatabase();
-    List<ContactModel> contacts = await _toList(db);
-    return contacts;
-  }
-
-  Future<List<ContactModel>> _toList(Database db) async {
     final List<Map<String, dynamic>> result = await db.query(_tableName);
     return List.generate(result.length, (index) {
       return ContactModel(

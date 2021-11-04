@@ -19,14 +19,14 @@ jobs:
       with:
         flutter-version: '2.0.5'
 
-      - name: Install dependencies
-        run: flutter pub get
+    - name: Install dependencies
+      run: flutter pub get
 
-      - name: Verify formatting
-        run: flutter format --output=none --set-exit-if-changed .
+    - name: Verify formatting
+      run: flutter format --output=none --set-exit-if-changed .
 
-      - name: Analyze project source
-        run: flutter analyze --fatal-infos
+    - name: Analyze project source
+      run: flutter analyze --fatal-infos
 
-      # - name: Run tests
-      #   run: flutter test
+    # - name: Run tests
+    #   run: flutter test

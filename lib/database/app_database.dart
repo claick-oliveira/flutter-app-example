@@ -1,3 +1,5 @@
+import 'package:bytebank/database/dao/contact_dao.dart';
+import 'package:bytebank/database/dao/transaction_dao.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -7,19 +9,8 @@ Future<Database> getDatabase() async {
   return openDatabase(
     path,
     onCreate: (db, version) {
-      db.execute(
-        'CREATE TABLE contacts('
-        'id INTEGER PRIMARY KEY AUTOINCREMENT, '
-        'name TEXT, '
-        'account_number INTEGER)',
-      );
-      db.execute(
-        'CREATE TABLE transactions('
-        'id INTEGER PRIMARY KEY AUTOINCREMENT, '
-        'value REAL, '
-        'account_number INTEGER, '
-        'time TEXT)',
-      );
+      db.execute(ContactDAO.tableSQl);
+      db.execute(TransactionDAO.tableSQl);
     },
     version: 1,
     //onDowngrade: onDatabaseDowngradeDelete,

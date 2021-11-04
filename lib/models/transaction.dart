@@ -1,4 +1,8 @@
 class TransactionModel {
+  static const String _id = 'id';
+  static const String _value = 'value';
+  static const String _accountNumber = 'account_number';
+  static const String _time = 'time';
   final int id;
   final double value;
   final int accountNumber;
@@ -14,4 +18,13 @@ class TransactionModel {
   double getValue() => value;
   int getAccountNumber() => accountNumber;
   String getTime() => time;
+
+  Map<String, dynamic> toMap() {
+    return {
+      _id: id,
+      _value: value,
+      _accountNumber: accountNumber,
+      _time: time,
+    };
+  }
 }
